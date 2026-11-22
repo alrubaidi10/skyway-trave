@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Create Account — SkyWay Travel{% endblock %}
+{% block content %}
+<div class="form-card">
+  <h2 style="margin-bottom:0.5rem;">Create Your SkyWay Account</h2>
+  <p style="color:#64748b;font-size:0.9rem;margin-bottom:1.5rem;">Join SkyWay Rewards to earn points on every flight and hotel stay.</p>
+
+  {% if error %}
+  <div class="alert alert-error">{{ error }}</div>
+  {% endif %}
+
+  <form action="/register" method="POST">
+    <div class="form-group">
+      <label for="full_name">Full Name</label>
+      <input type="text" id="full_name" name="full_name" required>
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-accent" style="width:100%;">Create Account</button>
+  </form>
+
+  <p style="margin-top:1.25rem;font-size:0.9rem;text-align:center;color:#64748b;">
+    Already a member? <a href="/login">Sign in</a>
+  </p>
+</div>
+{% endblock %}

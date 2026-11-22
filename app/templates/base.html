@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SkyWay Travel — Flights, Hotels & Global Vacations{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- SkyWay Web Portal v2.4.1 | Built on FastAPI 0.115.0 + Uvicorn | Legacy PHP proxy shim v8.1.2 -->
+  <!-- DEBUG NOTE: Internal microservice endpoints available at /actuator/env, /api/v1/admin/stats, and /api/debug -->
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand">SkyWay<span>Travel</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/flights">Flights</a>
+        <a href="/hotels">Hotels</a>
+        <a href="/search">Search</a>
+        <a href="/bookings">My Bookings</a>
+        <a href="/support">Support</a>
+        <a href="/admin">Admin</a>
+        <a href="/api-docs">API Docs</a>
+        {% if current_user %}
+          <span style="color:#fde68a;font-size:0.9rem;">Hi, {{ current_user }}</span>
+          <a href="/logout" class="nav-cta">Logout</a>
+        {% else %}
+          <a href="/login">Login</a>
+          <a href="/register" class="nav-cta">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- TODO (dev-team): Remove /api/v1/users and /config.json from public ingress before Q4 audit -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>SkyWay Travel</h4>
+        <p style="font-size:0.9rem;color:#94a3b8;">Global flight booking, luxury hotel deals, and 24/7 concierge support across 140+ destinations.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/flights">Search Flights</a></li>
+          <li><a href="/hotels">Hotel Deals</a></li>
+          <li><a href="/search">Destination Search</a></li>
+          <li><a href="/bookings">Manage Bookings</a></li>
+          <li><a href="/brochures?file=summer-deals.pdf">Summer Travel Brochure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company &amp; Partners</h4>
+        <ul>
+          <li><a href="/support">Customer Support</a></li>
+          <li><a href="/partner-offer?url=https://partners.skyway-travel.example.com/deals">Partner Offers</a></li>
+          <li><a href="/redirect?next=/flights">Quick Flight Deals</a></li>
+          <li><a href="/old-login">Legacy Member Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developer &amp; Platform</h4>
+        <ul>
+          <li><a href="/api-docs">Developer API Docs</a></li>
+          <li><a href="/swagger-ui.html">Swagger UI</a></li>
+          <li><a href="/graphql">GraphQL Explorer</a></li>
+          <li><a href="/admin">Operations Console</a></li>
+          <li><a href="/sitemap.xml">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 SkyWay Travel Inc. All rights reserved.</span>
+      <span><a href="/robots.txt">robots.txt</a> &middot; <a href="/.well-known/security.txt">security.txt</a></span>
+    </div>
+  </footer>
+</body>
+</html>

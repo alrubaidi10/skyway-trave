@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Booking {{ booking.booking_ref }} — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">Itinerary Details: {{ booking.booking_ref }}</h1>
+
+<div class="card" style="max-width:720px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+    <h3>Passenger: {{ booking.passenger_name }}</h3>
+    <span class="badge">{{ booking.status }}</span>
+  </div>
+  <p><strong>Email:</strong> {{ booking.passenger_email }}</p>
+  <p><strong>Flight:</strong> {{ booking.flight_number }} ({{ booking.airline }})</p>
+  <p><strong>Route:</strong> {{ booking.origin }} &rarr; {{ booking.destination }}</p>
+  <p><strong>Departure:</strong> {{ booking.departure_time }}</p>
+  <p><strong>Total Paid:</strong> ${{ "%.2f"|format(booking.total_price) }}</p>
+  <p><strong>Booked On:</strong> {{ booking.created_at }}</p>
+  <div style="margin-top:1.5rem;display:flex;gap:0.75rem;">
+    <a href="/bookings" class="btn btn-outline">Back to Bookings</a>
+    <a href="/api/v1/bookings/{{ booking.id }}" class="btn btn-primary">Download JSON Receipt</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Hotels — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">Curated Hotel Deals</h1>
+<p style="color:#64748b;margin-bottom:1.5rem;">Handpicked luxury and boutique stays with real-time partner availability checks.</p>
+
+<div class="grid">
+  {% for h in hotels %}
+  <div class="card">
+    <div>
+      <span class="badge">{{ h.rating }} &#9733;</span>
+      <h3 style="margin-top:0.6rem;">{{ h.name }}</h3>
+      <div class="meta">{{ h.city }}, {{ h.country }}</div>
+      <p style="font-size:0.9rem;color:#475569;margin-bottom:0.6rem;">{{ h.description }}</p>
+      <div class="meta"><strong>Amenities:</strong> {{ h.amenities }}</div>
+    </div>
+    <div>
+      <div class="price-tag">${{ "%.2f"|format(h.price_per_night) }} <span style="font-size:0.85rem;font-weight:400;color:#64748b;">/ night</span></div>
+      <a href="/api/v1/check-hotel-availability?hotel_id={{ h.id }}&webhook_url=https://hotels.skyway-travel.example.com/status" class="btn btn-primary" style="width:100%;text-align:center;">Check Live Availability</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

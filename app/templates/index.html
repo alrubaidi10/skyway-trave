@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}SkyWay Travel — Book Flights & Hotels Worldwide{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Discover Your Next Horizon</h1>
+  <p>Compare non-stop flights, boutique hotels, and curated vacation packages with instant confirmation and 24/7 travel assistance.</p>
+  <form class="search-bar" action="/flights/search" method="GET">
+    <input type="text" name="destination" placeholder="Where do you want to fly? (e.g. London, Paris, Tokyo)" required>
+    <input type="date" name="departure_date" value="2026-12-15">
+    <select name="cabin">
+      <option value="Economy">Economy</option>
+      <option value="Premium Economy">Premium Economy</option>
+      <option value="Business">Business Class</option>
+    </select>
+    <button type="submit" class="btn btn-accent">Search Flights</button>
+  </form>
+</section>
+
+<h2 class="section-title">Featured Flight Deals</h2>
+<div class="grid">
+  {% for f in flights[:4] %}
+  <div class="card">
+    <div>
+      <span class="badge">{{ f.cabin_class }}</span>
+      <h3 style="margin-top:0.6rem;">{{ f.origin }} &rarr; {{ f.destination }}</h3>
+      <div class="meta">{{ f.airline }} &middot; Flight {{ f.flight_number }}</div>
+      <div class="meta">Departs: {{ f.departure_time }}</div>
+    </div>
+    <div>
+      <div class="price-tag">${{ "%.2f"|format(f.price) }}</div>
+      <a href="/flights/search?destination={{ f.destination.split(' ')[0] }}" class="btn btn-primary" style="width:100%;text-align:center;">View Flight</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h2 class="section-title">Popular Hotel Stays</h2>
+<div class="grid">
+  {% for h in hotels[:3] %}
+  <div class="card">
+    <div>
+      <span class="badge">{{ h.rating }} &#9733;</span>
+      <h3 style="margin-top:0.6rem;">{{ h.name }}</h3>
+      <div class="meta">{{ h.city }}, {{ h.country }}</div>
+      <p style="font-size:0.9rem;color:#475569;margin-bottom:0.8rem;">{{ h.description }}</p>
+    </div>
+    <div>
+      <div class="price-tag">${{ "%.0f"|format(h.price_per_night) }} <span style="font-size:0.85rem;font-weight:400;color:#64748b;">/ night</span></div>
+      <a href="/hotels" class="btn btn-outline" style="width:100%;text-align:center;">Check Availability</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card" style="background:#eff6ff;border-color:#bfdbfe;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <h3>2026 Travel Guides &amp; Partner Exclusives</h3>
+      <p style="color:#475569;font-size:0.95rem;">Download our seasonal destination brochures or explore partner loyalty offers.</p>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <a href="/brochures?file=summer-deals.pdf" class="btn btn-primary">Download Brochure</a>
+      <a href="/partner-offer?url=https://partners.skyway-travel.example.com/deals" class="btn btn-accent">Partner Offers</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

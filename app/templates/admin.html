@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Operations Console — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">Internal Operations &amp; Admin Console</h1>
+
+<div class="grid">
+  <div class="card">
+    <div class="meta">Total Registered Users</div>
+    <div class="price-tag">{{ stats.total_users }}</div>
+  </div>
+  <div class="card">
+    <div class="meta">Active Bookings</div>
+    <div class="price-tag">{{ stats.total_bookings }}</div>
+  </div>
+  <div class="card">
+    <div class="meta">Total Booking Revenue</div>
+    <div class="price-tag">${{ "%.2f"|format(stats.total_revenue) }}</div>
+  </div>
+  <div class="card">
+    <div class="meta">Scheduled Flights</div>
+    <div class="price-tag">{{ stats.total_flights }}</div>
+  </div>
+</div>
+
+<h2 class="section-title">Customer Directory</h2>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Passport</th>
+        <th>Loyalty Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.full_name }}</td>
+        <td>{{ u.email }}</td>
+        <td><span class="badge">{{ u.role }}</span></td>
+        <td>{{ u.passport_no }}</td>
+        <td>{{ u.loyalty_points }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Internal Service Endpoints</h3>
+  <ul style="margin-left:1.25rem;margin-top:0.5rem;">
+    <li><a href="/api/v1/admin/stats">/api/v1/admin/stats</a> — Operations metrics JSON</li>
+    <li><a href="/api/v1/users">/api/v1/users</a> — Full customer directory JSON</li>
+    <li><a href="/actuator/env">/actuator/env</a> — Runtime environment configuration</li>
+    <li><a href="/server-status">/server-status</a> — Web server status</li>
+  </ul>
+</div>
+{% endblock %}

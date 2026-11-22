@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Developer API Documentation — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">SkyWay Travel Partner &amp; Developer APIs</h1>
+<p style="color:#64748b;margin-bottom:1.5rem;">Integrate real-time flight schedules, booking lookups, and hotel availability into your travel platform.</p>
+
+<div class="grid">
+  <div class="card">
+    <h3>REST API Specification</h3>
+    <p style="font-size:0.9rem;color:#475569;margin-bottom:1rem;">Interactive Swagger UI and OpenAPI 3.0 schema definitions.</p>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <a href="/swagger-ui.html" class="btn btn-primary">Swagger UI</a>
+      <a href="/openapi.json" class="btn btn-outline">openapi.json</a>
+      <a href="/swagger.json" class="btn btn-outline">swagger.json</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>GraphQL Endpoint</h3>
+    <p style="font-size:0.9rem;color:#475569;margin-bottom:1rem;">Query flights, bookings, and passenger records with full schema introspection.</p>
+    <a href="/graphql" class="btn btn-primary">Open GraphQL</a>
+  </div>
+  <div class="card">
+    <h3>Microservice Telemetry</h3>
+    <p style="font-size:0.9rem;color:#475569;margin-bottom:1rem;">Health checks, service status, and environment configuration endpoints.</p>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <a href="/actuator" class="btn btn-outline">/actuator</a>
+      <a href="/actuator/health" class="btn btn-outline">/actuator/health</a>
+      <a href="/actuator/env" class="btn btn-outline">/actuator/env</a>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>GET</td><td><a href="/api/v1/flights?id=1">/api/v1/flights?id=1</a></td><td>Fetch flight schedule details by ID</td></tr>
+      <tr><td>GET</td><td><a href="/api/v1/users">/api/v1/users</a></td><td>List registered travel accounts</td></tr>
+      <tr><td>GET</td><td><a href="/api/v1/bookings/1">/api/v1/bookings/{id}</a></td><td>Retrieve booking record by ID</td></tr>
+      <tr><td>GET</td><td><a href="/api/v1/profile?user_id=1">/api/v1/profile</a></td><td>Fetch traveler profile</td></tr>
+      <tr><td>GET</td><td><a href="/api/v1/check-hotel-availability?webhook_url=https://hotels.skyway-travel.example.com/status">/api/v1/check-hotel-availability</a></td><td>Partner hotel availability webhook check</td></tr>
+      <tr><td>GET</td><td><a href="/api/v1/admin/stats">/api/v1/admin/stats</a></td><td>Platform booking &amp; revenue statistics</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

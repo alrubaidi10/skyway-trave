@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: skyway-travel
+    env: docker
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: APP_ENV
+        value: "production"

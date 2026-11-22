@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Destination Search — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">Destination &amp; Package Search</h1>
+
+<form class="search-bar" action="/search" method="GET" style="margin-bottom:2rem;border:1px solid #e2e8f0;">
+  <input type="text" name="q" value="{{ q }}" placeholder="Search cities, airlines, or hotels...">
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+{% if q %}
+<div class="alert alert-info">
+  Showing travel results for: <strong>{{ q | safe }}</strong>
+</div>
+{% endif %}
+
+<div class="grid">
+  {% for f in flights %}
+  <div class="card">
+    <div>
+      <span class="badge">Flight {{ f.flight_number }}</span>
+      <h3 style="margin-top:0.5rem;">{{ f.origin }} &rarr; {{ f.destination }}</h3>
+      <div class="meta">{{ f.airline }} &middot; {{ f.departure_time }}</div>
+    </div>
+    <div>
+      <div class="price-tag">${{ "%.2f"|format(f.price) }}</div>
+      <a href="/flights/search?destination={{ f.destination.split(' ')[0] }}" class="btn btn-primary">View Details</a>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% for h in hotels %}
+  <div class="card">
+    <div>
+      <span class="badge">Hotel &middot; {{ h.rating }} &#9733;</span>
+      <h3 style="margin-top:0.5rem;">{{ h.name }}</h3>
+      <div class="meta">{{ h.city }}, {{ h.country }}</div>
+      <p style="font-size:0.88rem;color:#475569;">{{ h.description }}</p>
+    </div>
+    <div>
+      <div class="price-tag">${{ "%.2f"|format(h.price_per_night) }} / night</div>
+      <a href="/hotels" class="btn btn-outline">View Hotel</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

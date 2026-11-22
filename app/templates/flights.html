@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Flights — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">Flight Search &amp; Schedules</h1>
+
+<form class="search-bar" action="/flights/search" method="GET" style="margin-bottom:2rem;border:1px solid #e2e8f0;">
+  <input type="text" name="destination" value="{{ destination or '' }}" placeholder="Enter destination city or airport code (e.g. London, Paris, DXB)">
+  <button type="submit" class="btn btn-primary">Find Flights</button>
+  <a href="/flights" class="btn btn-outline">Reset</a>
+</form>
+
+{% if sql_error %}
+<div class="alert alert-error">
+  <strong>Database Query Error:</strong>
+  <pre style="margin-top:0.5rem;white-space:pre-wrap;font-size:0.85rem;">{{ sql_error }}</pre>
+</div>
+{% endif %}
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Flight #</th>
+        <th>Airline</th>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Departure</th>
+        <th>Cabin</th>
+        <th>Seats</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in flights %}
+      <tr>
+        <td><strong>{{ f.flight_number }}</strong></td>
+        <td>{{ f.airline }}</td>
+        <td>{{ f.origin }}</td>
+        <td>{{ f.destination }}</td>
+        <td>{{ f.departure_time }}</td>
+        <td><span class="badge">{{ f.cabin_class }}</span></td>
+        <td>{{ f.seats_available }}</td>
+        <td><strong>${{ "%.2f"|format(f.price) }}</strong></td>
+        <td><a href="/bookings?book_flight={{ f.id }}" class="btn btn-accent" style="padding:0.4rem 0.8rem;font-size:0.85rem;">Book</a></td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="9" style="text-align:center;color:#64748b;padding:2rem;">No matching flights found for your criteria.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}My Bookings — SkyWay Travel{% endblock %}
+{% block content %}
+<h1 class="section-title">Manage Your Bookings</h1>
+
+<div class="card" style="margin-bottom:2rem;">
+  <h3>Look Up Booking by Reference</h3>
+  <form class="search-bar" action="/booking/details" method="GET" style="padding:0.75rem 0 0;box-shadow:none;">
+    <input type="text" name="ref" placeholder="Enter booking reference (e.g. SW-849201)" required>
+    <button type="submit" class="btn btn-primary">Retrieve Itinerary</button>
+  </form>
+</div>
+
+{% if message %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Booking Ref</th>
+        <th>Passenger</th>
+        <th>Flight</th>
+        <th>Route</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr>
+        <td><strong>{{ b.booking_ref }}</strong></td>
+        <td>{{ b.passenger_name }}</td>
+        <td>{{ b.flight_number }}</td>
+        <td>{{ b.origin }} &rarr; {{ b.destination }}</td>
+        <td><span class="badge">{{ b.status }}</span></td>
+        <td>${{ "%.2f"|format(b.total_price) }}</td>
+        <td>
+          <a href="/booking/details?ref={{ b.booking_ref }}">View</a> |
+          <a href="/api/v1/bookings/{{ b.id }}">JSON</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
